@@ -1,10 +1,6 @@
 package com.company;
 
-import java.io.EOFException;
-
 public class ArrayLogic {
-
-    public static final int HALFARRAY = 2;
 
     public static double getMax(double[] array){
         double temp = array[0];
@@ -39,19 +35,29 @@ public class ArrayLogic {
         return arithmetical;
     }
 
-    public static double getGeometrical(double[] array) throws EOFException{
-        double geometrical = 1;//if geometrical exist it's always > 0
+    public static boolean checkForMinus(double[] array){
 
         for (double element: array){
 
-            if (element > 0) {
-                geometrical *= Math.pow(element, 1. / array.length);
-            }
-            else{
-                return -1;
+            if(element < 0){
+                return false;
             }
         }
-        return geometrical;
+        return true;
+    }
+
+    public static double getGeometrical(double[] array){
+        double geometrical = 1;//if geometrical exist it's always > 0
+
+        if (checkForMinus(array)) {
+
+            for (double element : array) {
+
+                geometrical *= element;
+            }
+            return Math.pow(geometrical, 1. / array.length);
+        }
+        return -1;
     }
 
     public static boolean checkSortIncreasing(double[] array){
@@ -78,8 +84,6 @@ public class ArrayLogic {
     }
 
 
-
-
     public static boolean checkSortDecrease(double[] array){
 
         for (int i = 0; i < array.length; i++)
@@ -94,36 +98,32 @@ public class ArrayLogic {
     }
 
 
-
     public static int checkLocalmin(double[] array) {
-        double temp = array[0];
 
-        for (int i = 1, j = i + 1; j < array.length; i++, j++) { //starts from 1 cause first and last elements can't be
+        for (int i = 1; i < array.length - 1; i++) { //starts from 1 cause first and last elements can't be
                                                                 //local min and max
-                if (array[i] < temp && array[j] > array[i]) {
-                    return i;
-                }
-            temp = array[i];
+            if (array[i] < array[i -1] && array[i + 1] > array[i]) {
+                return i;
+            }
         }
         return -1;
     }
 
     public static int checkLocalmax(double[] array) {
-        double temp = array[0];
 
-        for (int i = 1, j = i + 1; j < array.length; i++, j++) {
+        for (int i = 1; i < array.length - 1; i++){
 
-                if (array[i] > temp && array[j] < array[i]) {
-                    return i;
-                }
-            temp = array[i];
+            if (array[i] > array[i - 1] && array[i + 1] < array[i]) {
+                return i;
+            }
         }
         return -1;
     }
 
     public static void reverse(double[] array){
+        int halfArray = array.length / 2;
 
-        for (int i = 0; i < array.length / HALFARRAY; i++){
+        for (int i = 0; i < halfArray; i++){
 
             array[i] = array[i] + array[array.length - (i + 1)];
             array[array.length - (i + 1)] = array[i] - array[array.length - (i + 1)];
@@ -131,9 +131,6 @@ public class ArrayLogic {
 
         }
     }
-
-
-
 }
 
 

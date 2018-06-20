@@ -48,7 +48,6 @@ public class Main {
         System.out.println("Local max is " + localmax);
 
         ArrayLogic.reverse(array);
-        System.out.println(Arrays.toString(array));
 
 
 
